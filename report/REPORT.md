@@ -62,7 +62,7 @@ Last lab's infrastructure (simple distributed system with a load balancer and tw
 
 
 # <a name="task-2"></a>Task 2: Add a tool to manage membership in the web server cluster
-
+## Delivrables
 1. Provide the docker log output for each of the containers: `ha`,
    `s1` and `s2`. You need to create a folder `logs` in your
    repository to store the files separately from the lab
@@ -87,9 +87,13 @@ Last lab's infrastructure (simple distributed system with a load balancer and tw
    `Serf`. Try to find other solutions that can be used to solve
    similar situations where we need some auto-discovery mechanism.
 
-**Note:** Pas oublier de supprimer les fichiers scripts.
-
 # <a name="task-3"></a>Task 3: React to membership changes
+## Delivrables
+1. Provide the docker log output for each of the containers:  `ha`, `s1` and `s2`.
+   Put your logs in the `logs` directory you created in the previous task.
+
+2. Provide the logs from the `ha` container gathered directly from the `/var/log/serf.log`
+   file present in the container. Put the logs in the `logs` directory in your repo.
 
 # <a name="task-4"></a>Task 4: Use a template engine to easily generate configuration files
 

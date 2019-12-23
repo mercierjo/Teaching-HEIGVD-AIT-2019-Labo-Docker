@@ -1,0 +1,12 @@
+========================= Sans s1 et s2 ===============================
+Member join script triggered
+Member join event received from: 5cfa000d7aef with role balancer
+Member join script triggered
+Member join event received from: a83468f0298c with role backend
+========================= Avec s1 et s2 ===============================
+Member join script triggered
+Member join event received from: 5cfa000d7aef with role balancer
+Member join script triggered
+Member join event received from: a83468f0298c with role backend
+Member join script triggered
+Member join event received from: 34161e9d81a8 with role backend
