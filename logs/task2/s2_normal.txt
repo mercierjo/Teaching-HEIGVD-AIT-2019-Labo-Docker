@@ -1,0 +1,101 @@
+[s6-init] making user provided files available at /var/run/s6/etc...exited 0.
+[s6-init] ensuring user provided files have correct perms...exited 0.
+[fix-attrs.d] applying ownership & permissions fixes...
+[fix-attrs.d] done.
+[cont-init.d] executing container initialization scripts...
+[cont-init.d] done.
+[services.d] starting services
+[services.d] done.
+/opt/bin/serf agent --join ha --tag role=backend
+==> Starting Serf agent...
+==> Starting Serf agent RPC...
+==> Serf agent running!
+         Node name: '82f2cd856c1d'
+         Bind addr: '0.0.0.0:7946'
+          RPC addr: '127.0.0.1:7373'
+         Encrypted: false
+          Snapshot: false
+           Profile: lan
+==> Joining cluster...(replay: false)
+Application started
+==> dial tcp 192.168.42.42:7946: getsockopt: connection refused
+/opt/bin/serf agent --join ha --tag role=backend
+==> Starting Serf agent...
+==> Starting Serf agent RPC...
+==> Serf agent running!
+         Node name: '82f2cd856c1d'
+         Bind addr: '0.0.0.0:7946'
+          RPC addr: '127.0.0.1:7373'
+         Encrypted: false
+          Snapshot: false
+           Profile: lan
+==> Joining cluster...(replay: false)
+==> dial tcp 192.168.42.42:7946: getsockopt: connection refused
+/opt/bin/serf agent --join ha --tag role=backend
+==> Starting Serf agent...
+==> Starting Serf agent RPC...
+==> Serf agent running!
+         Node name: '82f2cd856c1d'
+         Bind addr: '0.0.0.0:7946'
+          RPC addr: '127.0.0.1:7373'
+         Encrypted: false
+          Snapshot: false
+           Profile: lan
+==> Joining cluster...(replay: false)
+    Join completed. Synced with 1 initial agents
+
+==> Log data will now stream in as it occurs:
+
+    2019/12/23 14:54:14 [INFO] agent: Serf agent starting
+    2019/12/23 14:54:14 [INFO] serf: EventMemberJoin: 82f2cd856c1d 192.168.42.22
+    2019/12/23 14:54:14 [INFO] agent: joining: [ha] replay: false
+    2019/12/23 14:54:14 [INFO] serf: EventMemberJoin: 814bede07cf0 192.168.42.11
+    2019/12/23 14:54:14 [INFO] serf: EventMemberJoin: 2e0d28e62812 192.168.42.42
+    2019/12/23 14:54:14 [INFO] agent: joined: 1 nodes
+[0mHEAD / [32m200 [0m14.537 ms - 114[0m
+    2019/12/23 14:54:15 [INFO] agent: Received event: member-join
+[0mHEAD / [32m200 [0m3.512 ms - 114[0m
+[0mHEAD / [32m200 [0m2.556 ms - 114[0m
+[0mHEAD / [32m200 [0m2.533 ms - 114[0m
+[0mHEAD / [32m200 [0m3.415 ms - 114[0m
+[0mHEAD / [32m200 [0m2.984 ms - 114[0m
+[0mHEAD / [32m200 [0m2.108 ms - 114[0m
+[0mHEAD / [32m200 [0m2.121 ms - 114[0m
+[0mHEAD / [32m200 [0m2.164 ms - 114[0m
+[0mHEAD / [32m200 [0m2.026 ms - 114[0m
+[0mHEAD / [32m200 [0m2.230 ms - 114[0m
+[0mHEAD / [32m200 [0m2.147 ms - 114[0m
+[0mHEAD / [32m200 [0m2.007 ms - 114[0m
+[0mHEAD / [32m200 [0m2.075 ms - 114[0m
+[0mHEAD / [32m200 [0m2.233 ms - 114[0m
+[0mHEAD / [32m200 [0m2.006 ms - 114[0m
+[0mHEAD / [32m200 [0m2.074 ms - 114[0m
+[0mHEAD / [32m200 [0m1.898 ms - 114[0m
+[0mHEAD / [32m200 [0m1.993 ms - 114[0m
+[0mHEAD / [32m200 [0m1.989 ms - 114[0m
+[0mHEAD / [32m200 [0m1.842 ms - 114[0m
+[0mHEAD / [32m200 [0m1.790 ms - 114[0m
+[0mHEAD / [32m200 [0m4.473 ms - 114[0m
+[0mHEAD / [32m200 [0m1.771 ms - 114[0m
+[0mHEAD / [32m200 [0m1.806 ms - 114[0m
+[0mHEAD / [32m200 [0m1.800 ms - 114[0m
+[0mHEAD / [32m200 [0m0.698 ms - 114[0m
+[0mHEAD / [32m200 [0m1.821 ms - 114[0m
+[0mHEAD / [32m200 [0m1.770 ms - 114[0m
+[0mHEAD / [32m200 [0m1.773 ms - 114[0m
+[0mHEAD / [32m200 [0m2.356 ms - 114[0m
+[0mHEAD / [32m200 [0m2.011 ms - 114[0m
+[0mHEAD / [32m200 [0m0.797 ms - 114[0m
+[0mHEAD / [32m200 [0m1.912 ms - 114[0m
+[0mHEAD / [32m200 [0m1.975 ms - 114[0m
+[0mHEAD / [32m200 [0m1.755 ms - 114[0m
+[0mHEAD / [32m200 [0m1.842 ms - 114[0m
+[0mHEAD / [32m200 [0m1.923 ms - 114[0m
+[0mHEAD / [32m200 [0m1.733 ms - 114[0m
+[0mHEAD / [32m200 [0m1.737 ms - 114[0m
+[0mHEAD / [32m200 [0m1.815 ms - 114[0m
+[0mHEAD / [32m200 [0m1.787 ms - 114[0m
+[0mHEAD / [32m200 [0m2.031 ms - 114[0m
+[0mHEAD / [32m200 [0m1.842 ms - 114[0m
+[0mHEAD / [32m200 [0m1.748 ms - 114[0m
+[0mHEAD / [32m200 [0m1.785 ms - 114[0m
