@@ -21,7 +21,7 @@ Forked from : https://github.com/SoftEng-HEIGVD/Teaching-HEIGVD-AIT-2019-Labo-Do
 
 # Introduction
 
-This lab builds on a previous lab on load balancing.
+This lab builds on a previous lab on load balancing, evaluating what we did there and expanding on it.
 
 # <a name="task-0"></a>Task 0 - Identify issues and install the tools
 
@@ -34,15 +34,27 @@ Last lab's infrastructure (simple distributed system with a load balancer and tw
 
 [M1] Do you think we can use the current solution for a production environment? What are the main problems when deploying it in a production environment?
 
+Sous la forme actuelle, la solution que nous avons mise en place n'est pas utilisable en production. Toutes les informations de serveur sont indiquées de manière statique, on n'a que 2 serveurs et un seul load balancer, ce qui veut dire que nous n'avons de loin pas assez de disponibilité pour une audience de plus qu'une poignée d'utilisateurs. De plus, chaque fois qu'on souhaite faire des changements, il faut éteindre les containers, changer les configs, puis finalement les relancer, ce qui n'est pas acceptable en production.
+
 [M2] Describe what you need to do to add new `webapp` container to the infrastructure. Give the exact steps of what you have to do without modifiying the way the things are done. Hint: You probably have to modify some configuration and script files in a Docker image.
+
+Pour chaque nouveau container d'application il faut ajouter un nouveau démarrage dans le script lançeant les images Docker avec une nouvelle combinaison nom/adresse IP valide. De plus, il faut indiquer toutes ces informations dans le fichier de configuration de HAProxy afin que ce dernier les prenne en compte.
 
 [M3] Based on your previous answers, you have detected some issues in the current solution. Now propose a better approach at a high level.
 
+Ce qu'on aimerait, ce serait une solution dynamique qui pourrait s'adapter au nombre d'utilisateurs courants, et qui géraient les crashs de containers. De plus, si on devrait pouvoir appliquer des changements sans redémarrer constamment tout le système.
+
 [M4] You probably noticed that the list of web application nodes is hardcoded in the load balancer configuration. How can we manage the web app nodes in a more dynamic fashion?
+
+Sous la forme actuelle il semble que les solutions possibles tournent toutes autour du fait d'annoncer plus de serveurs backend dans la config de HAProxy sous la forme de template ou alors carrément sous formes de serveurs nodes. On peut ensuite soit enable les serveurs (dans le cas de template servers disabled) ou alors lancer les serveurs décrits sous les nodes (avec Docker). Ces solutions semblent cependant peu rapides et pas très dynamiques : on découvra probablement des solutions adaptées au courant de ce laboratoire.
 
 [M5] Do you think our current solution is able to run additional management processes beside the main web server / load balancer process in a container? If no, what is missing / required to reach the goal? If yes, how to proceed to run for example a log forwarding process?
 
+Pour l'instant nos containers Docker ne supportent qu'un processus principal. Afin de gérer, par exemple, un tel système de forwarding des logs, il nous faudrait non seulement un container central responsable de ces logs, mais il faudrait également donner à nos machines Docker la capacité de gérer plusieurs processus, dont un pourrait forwarder des logs au container responsable.
+
 [M6] What happens if we add more web server nodes? Do you think it is really dynamic? It's far away from being a dynamic configuration. Can you propose a solution to solve this?
+
+Comme dit au point M4, ces ajouts de nodes server ne font de notre solution pas un système très dynamique. Ce que l'on fera probablement après avoir ajouté une fonctionnalité multi-processus à nos serveurs dockerisés, sera de profiter de ces outils pour communiquer des informations aux autres containers. On pourra utiliser ces informations de performances ou d'erreurs notamment pour qu'une autre machine (peut-être même la machine HAProxy) lance/kill de nouveaux serveurs en fonction de la charge de notre système. Un tel système serait effectivement dynamique.
 
 ## Install the tools : deliverables
 
@@ -53,7 +65,9 @@ Last lab's infrastructure (simple distributed system with a load balancer and tw
 2. Repository URL : https://github.com/mercierjo/Teaching-HEIGVD-AIT-2019-Labo-Docker
 
 # <a name="task-1"></a>Task 1: Add a process supervisor to run several processes
+
 ## Delivrables
+
 1. Take a screenshot of the stats page of HAProxy at http://192.168.42.42:1936. You should see your backend nodes. It should be really similar to the screenshot of the previous task.
 
 ![Dashboard Step 1](./images/step1_1.png)
@@ -62,7 +76,9 @@ Last lab's infrastructure (simple distributed system with a load balancer and tw
 
 
 # <a name="task-2"></a>Task 2: Add a tool to manage membership in the web server cluster
+
 ## Delivrables
+
 1. Provide the docker log output for each of the containers: `ha`,
    `s1` and `s2`. You need to create a folder `logs` in your
    repository to store the files separately from the lab
@@ -88,7 +104,9 @@ Last lab's infrastructure (simple distributed system with a load balancer and tw
    similar situations where we need some auto-discovery mechanism.
 
 # <a name="task-3"></a>Task 3: React to membership changes
+
 ## Delivrables
+
 1. Provide the docker log output for each of the containers:  `ha`, `s1` and `s2`.
    Put your logs in the `logs` directory you created in the previous task.
 
