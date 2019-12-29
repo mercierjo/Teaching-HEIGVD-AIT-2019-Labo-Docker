@@ -66,7 +66,7 @@ Comme dit au point M4, ces ajouts de nodes server ne font de notre solution pas 
 
 # <a name="task-1"></a>Task 1: Add a process supervisor to run several processes
 
-## Delivrables
+## Deliverables
 
 1. Take a screenshot of the stats page of HAProxy at http://192.168.42.42:1936. You should see your backend nodes. It should be really similar to the screenshot of the previous task.
 
@@ -77,7 +77,7 @@ Comme dit au point M4, ces ajouts de nodes server ne font de notre solution pas 
 
 # <a name="task-2"></a>Task 2: Add a tool to manage membership in the web server cluster
 
-## Delivrables
+## Deliverables
 
 1. Provide the docker log output for each of the containers: `ha`,
    `s1` and `s2`. You need to create a folder `logs` in your
@@ -105,7 +105,7 @@ Comme dit au point M4, ces ajouts de nodes server ne font de notre solution pas 
 
 # <a name="task-3"></a>Task 3: React to membership changes
 
-## Delivrables
+## Deliverables
 
 1. Provide the docker log output for each of the containers:  `ha`, `s1` and `s2`.
    Put your logs in the `logs` directory you created in the previous task.
@@ -114,6 +114,48 @@ Comme dit au point M4, ces ajouts de nodes server ne font de notre solution pas 
    file present in the container. Put the logs in the `logs` directory in your repo.
 
 # <a name="task-4"></a>Task 4: Use a template engine to easily generate configuration files
+
+## Deliverables
+
+1. You probably noticed when we added `xz-utils`, we have to rebuild
+   the whole image which took some time. What can we do to mitigate
+   that? Take a look at the Docker documentation on
+   [image layers](https://docs.docker.com/engine/userguide/storagedriver/imagesandcontainers/#images-and-layers).
+   Tell us about the pros and cons to merge as much as possible of the
+   command. In other words, compare:
+
+  ```
+  RUN command 1
+  RUN command 2
+  RUN command 3
+  ```
+
+  vs.
+
+  ```
+  RUN command 1 && command 2 && command 3
+  ```
+
+  There are also some articles about techniques to reduce the image
+  size. Try to find them. They are talking about `squashing` or
+  `flattening` images.
+
+2. Propose a different approach to architecture our images to be able
+   to reuse as much as possible what we have done. Your proposition
+   should also try to avoid as much as possible repetitions between
+   your images.
+
+3. Provide the `/tmp/haproxy.cfg` file generated in the `ha` container
+   after each step.  Place the output into the `logs` folder like you
+   already did for the Docker logs in the previous tasks. Three files
+   are expected.
+   
+   In addition, provide a log file containing the output of the 
+   `docker ps` console and another file (per container) with
+   `docker inspect <container>`. Four files are expected.
+   
+4. Based on the three output files you have collected, what can you
+   say about the way we generate it? What is the problem if any?
 
 # <a name="task-5"></a>Task 5: Generate a new load balancer configuration when membership changes
 

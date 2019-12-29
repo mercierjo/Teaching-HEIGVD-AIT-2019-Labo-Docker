@@ -1,0 +1,1 @@
+echo "Container fff4d1925605 has joined the Serf cluster with the following IP address: 172.19.0.3" >> /ha/config/haproxy.cfg.hb
