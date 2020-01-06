@@ -165,43 +165,28 @@ Comme dit au point M4, ces ajouts de nodes server ne font de notre solution pas 
 
 ## Deliverables
 
-1. Provide the file `/usr/local/etc/haproxy/haproxy.cfg` generated in
-   the `ha` container after each step. Three files are expected.
+1. Provide the file `/usr/local/etc/haproxy/haproxy.cfg` generated in the `ha` container after each step. Three files are expected.
    
-   In addition, provide a log file containing the output of the 
-   `docker ps` console and another file (per container) with
-   `docker inspect <container>`. Four files are expected.
+    In addition, provide a log file containing the output of the `docker ps` console and another file (per container) with `docker inspect <container>`. Four files are expected.
 
-2. Provide the list of files from the `/nodes` folder inside the `ha` container.
-   One file expected with the command output.
+2. Provide the list of files from the `/nodes` folder inside the `ha` container. One file expected with the command output.
 
-3. Provide the configuration file after you stopped one container and
-   the list of nodes present in the `/nodes` folder. One file expected
-   with the command output. Two files are expected.
+3. Provide the configuration file after you stopped one container and the list of nodes present in the `/nodes` folder. One file expected with the command output. Two files are expected.
    
-    In addition, provide a log file containing the output of the 
-   `docker ps` console. One file expected.
+    In addition, provide a log file containing the output of the `docker ps` console. One file expected.
 
-4. (Optional:) Propose a different approach to manage the list of backend
-   nodes. You do not need to implement it. You can also propose your
-   own tools or the ones you discovered online. In that case, do not
-   forget to cite your references.
+4. (Optional:) Propose a different approach to manage the list of backend nodes. You do not need to implement it. You can also propose your own tools or the ones you discovered online. In that case, do not forget to cite your references.
 
 # <a name="task-6"></a>Task 6: Make the load balancer automatically reload the new configuration
 
 ## Deliverables
 
-1. Take a screenshots of the HAProxy stat page showing more than 2 web
-   applications running. Additional screenshots are welcome to see a
-   sequence of experimentations like shutting down a node and starting
-   more nodes.
+1. Take a screenshots of the HAProxy stat page showing more than 2 web applications running. Additional screenshots are welcome to see a sequence of experimentations like shutting down a node and starting more nodes.
    
-   Also provide the output of `docker ps` in a log file. At least 
-   one file is expected. You can provide one output per step of your
-   experimentation according to your screenshots.
+   Also provide the output of `docker ps` in a log file. At least one file is expected. You can provide one output per step of your experimentation according to your screenshots.
    
-2. Give your own feelings about the final solution. Propose
-   improvements or ways to do the things differently. If any, provide
-   references to your readings for the improvements.
+2. Give your own feelings about the final solution. Propose improvements or ways to do the things differently. If any, provide references to your readings for the improvements.
+
+    A la fin de cet exercice nous avons une infrastructure bien plus adaptable et élégante qu'au début. L'ajout que l'on trouverait intéressant à notre système, serait une solution pour automatiser le lancement de plus de machines en fonction du traffic reçu.
 
 3. (Optional:) Present a live demo where you add and remove a backend container.
