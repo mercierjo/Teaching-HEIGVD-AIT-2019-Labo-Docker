@@ -190,3 +190,13 @@ Comme dit au point M4, ces ajouts de nodes server ne font de notre solution pas 
     A la fin de cet exercice nous avons une infrastructure bien plus adaptable et élégante qu'au début. L'ajout que l'on trouverait intéressant à notre système, serait une solution pour automatiser le lancement de plus de machines en fonction du traffic reçu.
 
 3. (Optional:) Present a live demo where you add and remove a backend container.
+
+# <a name="difficulties"></a>Difficulties
+
+Contrairement à certains labos précédents, malgré la durée de celui-ci, trouver la documentation adéquate fut assez facile, principalement dû au fait que la documentation référencée par les directives de labo était aisée à lire et parcourir.
+
+Mis à part des problèmes de version docker et docker-compose sur une de nos machines au début du labo, nous n'avons pas rencontré de problèmes majeurs et suivre les indications pour la mise en place de l'infrastructure fut agréable en raison de la marche à suivre claire et bien expliquée.
+
+# <a name="conclusion"></a>Conclusion
+
+Lors de ce laboratoire nous avons mis à jour l'infrastructure de service web que l'on avait créée précédemment. On a appris à la rendre dynamique en utilisant divers tools, à l'optimiser et serions capables de rajouter de nouvelles fonctionnalités.
