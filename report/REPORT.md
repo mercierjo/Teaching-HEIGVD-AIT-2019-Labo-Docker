@@ -72,8 +72,11 @@ Comme dit au point M4, ces ajouts de nodes server ne font de notre solution pas 
 
 ![Dashboard Step 1](./images/step1_1.png)
 
-2. Describe your difficulties for this task and your understanding of what is happening during this task. Explain in your own words why are we installing a process supervisor. Do not hesitate to do more research and to find more articles on that topic to illustrate the problem.
+2. Describe your difficulties for this task and your understanding of what is happening during this task. Explain in your own words why we are installing a process supervisor. Do not hesitate to do more research and to find more articles on that topic to illustrate the problem.
 
+    Comme on l'avait dit au point [M5], nos containers Docker ne supportent qu'un processus principal avant que l'on implémente ce point. Ce qu'on aimerait, c'est de pouvoir exécuter plusieurs tâches sur une même machine, afin de pouvoir communiquer des informations cruciales pour un système HA dynamique. Au lieu d'avoir un seul processus par container, on aurait une tâche par container, mais qui peut être composée de plusieurs processus.
+
+    S6 permet de faire cela en remplaçant le processus principal de nos machines Docker par un processus de gestion d'autres processus, nous permettant d'effectuer plusieurs tâches sur un seul container.
 
 # <a name="task-2"></a>Task 2: Add a tool to manage membership in the web server cluster
 
@@ -95,13 +98,17 @@ Comme dit au point M4, ces ajouts de nodes server ne font de notre solution pas 
        |-- ...
    ```
 
-2. Give the answer to the question about the existing problem with the
-   current solution.
+2. Give the answer to the question about the existing problem with the current solution.
 
-3. Give an explanation on how `Serf` is working. Read the official
-   website to get more details about the `GOSSIP` protocol used in
-   `Serf`. Try to find other solutions that can be used to solve
-   similar situations where we need some auto-discovery mechanism.
+    Comme indiqué dans les remarques précédentes dans la donnée, notre load balancer ha risque de tomber, ou simplement de s'éteindre après que son UPTIME soit passé. Dans ce cas on se retrouve dans un cluster décentralisé, mais sans load balancer.
+    
+    Pour empêcher une telle situation on pourrait lancer plusieurs load balancer, pour qu'il y ait moins de risque qu'aucun load balancer soit up. De plus, ces containers sont maintenant capables de monitorer l'état des autres nodes et sont équipés de plusieurs processus potentiels. Ceci signifie que lorsqu'un de nos nodes tombe, on peut l'indiquer par un signal et potentiellement relancer un nouveau node pour le remplacer.
+
+3. Give an explanation on how `Serf` is working. Read the official website to get more details about the `GOSSIP` protocol used in `Serf`. Try to find other solutions that can be used to solve similar situations where we need some auto-discovery mechanism.
+
+    `Serf` fonctionne en lançant l'agent `Serf` sur chaque machine que l'on veut ajouter à notre cluster. Cet agent permet de communiquer des informations aux autres agents `Serf` dans le cluster ainsi que de recevoir celles des autres. A partir de ces infos, les machines en question peuvent effectuer des scripts spéciaux (`event handlers`) en réponse aux événements communiqués. Les événements auxquels l'agent réagit sont en général des changements à l'appartenance au cluster (machine offline ou online) mais peuvent également être des événement spécifiés ou des demandes.
+
+    Afin d'effectuer ces communications, `Serf` utilise le protocole `Gossip` permettant de broadcast des messages aux autres nodes appartenant au cluster. Fondé sur `SWIM` (Scalable Weakly-consistent Infection-style Process Group Membership Protocol), ce protocole propage les informations d'appartenance de manière très efficace, optimisant ainsi l'utilisation du réseau.
 
 # <a name="task-3"></a>Task 3: React to membership changes
 
@@ -136,26 +143,23 @@ Comme dit au point M4, ces ajouts de nodes server ne font de notre solution pas 
   RUN command 1 && command 2 && command 3
   ```
 
-  There are also some articles about techniques to reduce the image
-  size. Try to find them. They are talking about `squashing` or
-  `flattening` images.
+    Chaque ligne de commande `RUN`, `COPY` et `ADD` dans le Dockerfile (depuis Docker 1.10) ajoute un layer à l'image que l'on construit, ce qui augmente la taille de cette dernière, mais réduit le temps de build également. Réduire le nombre de lignes permet donc de réduire la taille mais prolonge le temps de build.
 
-2. Propose a different approach to architecture our images to be able
-   to reuse as much as possible what we have done. Your proposition
-   should also try to avoid as much as possible repetitions between
-   your images.
+  There are also some articles about techniques to reduce the image size. Try to find them. They are talking about `squashing` or `flattening` images.
 
-3. Provide the `/tmp/haproxy.cfg` file generated in the `ha` container
-   after each step.  Place the output into the `logs` folder like you
-   already did for the Docker logs in the previous tasks. Three files
-   are expected.
+    Un moyen de réduire la taille totale de nos images est d'utiliser une image de base aussi petite que possible (alpine et busbox ne font que 2MB/5MB). Il est également d'utiliser un tool tel que docker-squash permettant de réduire le nombre de layers en fusionnant certains layers, tout en maintenant l'utilité de chacun.
+
+2. Propose a different approach to architecture our images to be able to reuse as much as possible what we have done. Your proposition should also try to avoid as much as possible repetitions between your images.
+
+    Nos images se ressemblent largement : au lieu de créer deux images parallèles complètement déconnectées, on pourrait utiliser une base image `scratch` partagée par `haproxy` et `node` où l'on spécifie toutes les informations se chevauchant, construit cette image, puis avec deux Dockerfiles avec les indications séparant `webapp` de `ha` on indique comme image de base de ces deux nouvelles images l'image scratch que l'on vient de créer.
+
+3. Provide the `/tmp/haproxy.cfg` file generated in the `ha` container after each step.  Place the output into the `logs` folder like you already did for the Docker logs in the previous tasks. Three files are expected.
+
+    In addition, provide a log file containing the output of the `docker ps` console and another file (per container) with `docker inspect <container>`. Four files are expected.
    
-   In addition, provide a log file containing the output of the 
-   `docker ps` console and another file (per container) with
-   `docker inspect <container>`. Four files are expected.
-   
-4. Based on the three output files you have collected, what can you
-   say about the way we generate it? What is the problem if any?
+4. Based on the three output files you have collected, what can you say about the way we generate it? What is the problem if any?
+
+    Les outputs nous indiquent que 3 nodes sont correctement devenus membre de notre cluster. La méthode pour accéder à ce information n'est pas très rapide, mais notre load balancer y a accès.
 
 # <a name="task-5"></a>Task 5: Generate a new load balancer configuration when membership changes
 
