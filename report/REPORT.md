@@ -2,7 +2,7 @@
 
 Authors: Mercier Jordan, Vogel Maximilian
 
-Date: 18.12.2019
+Date: 07.01.2020
 
 Forked from : https://github.com/SoftEng-HEIGVD/Teaching-HEIGVD-AIT-2019-Labo-Docker
 
@@ -159,7 +159,7 @@ Comme dit au point M4, ces ajouts de nodes server ne font de notre solution pas 
    
 4. Based on the three output files you have collected, what can you say about the way we generate it? What is the problem if any?
 
-    Les outputs nous indiquent que 3 nodes sont correctement devenus membre de notre cluster. La méthode pour accéder à ce information n'est pas très rapide, mais notre load balancer y a accès.
+    Les outputs nous indiquent que 3 nodes sont correctement devenus membre de notre cluster. La méthode pour accéder à cette information n'est pas très rapide, mais notre load balancer y a accès.
 
 # <a name="task-5"></a>Task 5: Generate a new load balancer configuration when membership changes
 
